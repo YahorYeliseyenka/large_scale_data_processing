@@ -1,0 +1,14 @@
+# https://itnext.io/prometheus-monitoring-for-celery-workers-655d089dbd59
+global:
+  scrape_interval:     60s
+
+scrape_configs:
+  - job_name: metrics-monitor
+    scrape_interval: 60s
+    static_configs:
+      - targets: ['metrics:8088']
+
+  - job_name: celery-monitor
+    scrape_interval: 60s
+    static_configs:
+      - targets: ['prometheus-celery-exporter:9540']

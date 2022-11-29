@@ -1,0 +1,26 @@
+version: "3"
+services:
+    nginxapp:
+        image: nginx
+        container_name: yy_nginx
+        restart: on-failure
+        volumes:
+            - .:/usr/share/nginx/html
+        ports:
+            - 80:80
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.50'
+                    memory: 50M
+                reservations:
+                    cpus: '0.25'
+                    memory: 20M
+    
+    curlapp:
+        image: curlimages/curl
+        container_name: my_curl
+        links:
+            - nginxapp
+        command: watch -n 5 curl http://nginxapp:80
+        restart: on-failure

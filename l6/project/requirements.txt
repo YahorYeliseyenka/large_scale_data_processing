@@ -1,0 +1,15 @@
+# celery==5.0.2
+# pandas
+# praw
+# flask
+# prometheus_client
+# celery-local-exporter
+# pymagnitude
+# pymon
+fastapi
+uvicorn
+streamlit
+pymagnitude
+pyspark==2.3.4
+numpy
+pandas

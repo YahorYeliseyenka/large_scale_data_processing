@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.VectorAssembler","timestamp":1611588157261,"sparkVersion":"2.3.4","uid":"VectorAssembler_4aafa8c7ff9f1b57cd35","paramMap":{"outputCol":"features","inputCols":["text_embedding","label"]}}

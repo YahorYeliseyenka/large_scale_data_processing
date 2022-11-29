@@ -1,0 +1,20 @@
+version: "3"
+services:
+  parser:
+    build: .
+    command: "python backend.py"
+    ports:
+      - 8080:8080
+    # depends_on:
+    #   - streamlit
+    volumes:
+      - ./app:/app
+  streamlit:
+    build: .
+    command: "streamlit run frontend.py"
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./app:/app
+    depends_on:
+      - parser

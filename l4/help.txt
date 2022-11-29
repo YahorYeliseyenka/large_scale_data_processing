@@ -1,0 +1,1 @@
+sudo scp -i aws_key.pem -r ec2-user@52.55.153.166:/home/ec2-user/l3-tn17-NumGuy/project_re/mongo-volume /home/yyeliseyenka/CODE1

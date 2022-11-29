@@ -1,0 +1,7 @@
+REDASH_HOST=http://localhost
+REDASH_LOG_LEVEL=INFO
+REDIS_URL=redis://redis:6379/0
+REDASH_DATABASE_URL=postgresql://postgres:passwort@postgres/postgres
+REDASH_COOKIE_SECRET=passwort
+REDASH_WEB_WORKERS=4
+POSTGRES_PASSWORD=passwort

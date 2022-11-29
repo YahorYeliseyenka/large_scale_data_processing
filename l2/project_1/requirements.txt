@@ -1,0 +1,6 @@
+celery==5.0.2
+pandas
+praw
+flask
+prometheus_client
+celery-local-exporter

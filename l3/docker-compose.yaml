@@ -1,0 +1,13 @@
+version: '3.4'
+services:
+  # Scheduler entry (from previous task list)
+  scheduler:
+    ...
+  # Scraping Worker entry (from previous task list)
+  scraping_worker:
+    ...
+
+  # RabbitMQ entry (from previous task list)
+  rabbitmq:
+    image: rabbitmq:3.8
+

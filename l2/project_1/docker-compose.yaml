@@ -1,0 +1,70 @@
+version: '3.4'
+services: 
+  worker:
+    build: .
+    image: &img worker 
+    command: [celery, --app=worker.app, worker]
+    environment: &env      
+      - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672
+      - CELERY_RESULT_BACKEND=rpc
+      - prometheus_multiproc_dir=/prometheus_multiproc_dir
+    depends_on:
+      - rabbitmq
+    volumes:
+      - ./app:/app 
+      - ./prometheus_multiproc:/prometheus_multiproc_dir
+
+  runner:
+    build: .
+    image: *img
+    command: [celery, --app=runner, beat]
+    environment: *env
+    depends_on:
+      - rabbitmq
+      - worker
+    volumes:
+      - ./app:/app
+      - ./prometheus_multiproc:/prometheus_multiproc_dir
+
+  rabbitmq:
+    image: rabbitmq:3.8
+    logging:
+      driver: none
+
+  metrics:
+    build: .
+    image: *img
+    command: [python, metrics.py]
+    environment:
+      - prometheus_multiproc_dir=/prometheus_multiproc_dir
+    depends_on:
+      - rabbitmq
+    volumes:
+      - ./app:/app
+      - ./prometheus_multiproc:/prometheus_multiproc_dir
+    ports:
+      - 8088:8088
+      
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+  prometheus-celery-exporter:
+    image: ovalmoney/celery-exporter
+    ports:
+      - 9540:9540
+    environment:
+      - CELERY_EXPORTER_BROKER_URL=amqp://guest:guest@rabbitmq:5672
+
+  grafana:
+    image: grafana/grafana
+    # restart: unless-stopped
+    links:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana:/var/lib/grafana
